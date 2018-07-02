@@ -13,6 +13,10 @@
 	Confd:  0.16.0
 	Nginx: 1.12.1
 
+	
+优化功能：
+         可选择上级项目目录，进行下级项目目录创建
+		 
 ## 效果演示
 
 ![image](https://github.com/1032231418/PYVM/blob/master/conf_web_images/yanshi.gif)	
