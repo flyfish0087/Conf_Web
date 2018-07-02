@@ -51,6 +51,21 @@
             </div>
         {% endif %}
 
+        <div class="form-group"><label class="col-sm-2 control-label">选择上级项目：</label>
+            <div class="col-sm-8">
+                <select name="superior_project_name" id="superior_project_name" class="select2_demo_3 form-control">
+                    <option selected="selected">----请选择----</option>
+                    {% for project in projects %}
+                        <option value="{{ project.id }}">{{ project.project_name }}</option>
+                    {% endfor %}
+                </select>
+                 {% for error in forms.name.errors %}<span style="color: red">{{ error }}</span>{% endfor %}
+            </div>
+        </div>
+
+
+
+
 
         <div class="hr-line-dashed"></div>
         <div class="form-group"><label class="col-sm-2 control-label">项目名称：</label>

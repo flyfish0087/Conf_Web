@@ -21,26 +21,49 @@ class  CreateProjectView(LoginRequiredMixin, TemplateView):
     '''
     template_name = 'confd/apply_project.html'
 
+    def get_context_data(self, **kwargs):
+        context = super(CreateProjectView, self).get_context_data(**kwargs)
+        context['projects'] = project_Confd.objects.values('id','project_name')
+        return context
+
+
     def post(self, request):
         webdata = request.POST.dict()
-        webdata['project_url']=webdata['project_url'].strip()
-        forms = ProjectForm(webdata)
-        if forms.is_valid():
-            try:
-                if create_dir(webdata['project_url']):
-                    forms.save()
-                    return HttpResponseRedirect(reverse('confd:project_list'))
-                else:
-                    render(request, 'confd/apply_project.html', {'forms': forms, 'errmsg': '项目创建失败'})
-            except:
-                render(request, 'confd/apply_project.html', {'forms': forms, 'errmsg': '项目创建失败'})
+        webdata['project_url'] = webdata['project_url'].strip()
 
-        return render(request, 'confd/apply_project.html', {'forms': forms, 'errmsg': '申请格式错误 或项目已存在！'})
+        #如果没选择上级项目,直接创建空白项目
+        if webdata['superior_project_name']  == '----\u8bf7\u9009\u62e9----':
+            if  Projects_form(webdata, request):
+               return HttpResponseRedirect(reverse('confd:project_list'))
+
+        #如果有选择上级项目,进行项目目录拼接创建项目
+        else:
+            pk = webdata.get('superior_project_name')
+            project_url =  project_Confd.objects.filter(pk=pk).values('project_url')[0]
+            webdata['project_url']  =   project_url['project_url'] + '/' +  webdata['project_url']
+            if  Projects_form(webdata, request):
+                return HttpResponseRedirect(reverse('confd:project_list'))
+
+
+def  Projects_form(webdata,request):
+    forms = ProjectForm(webdata)
+    if forms.is_valid():
+        try:
+            if create_dir(webdata['project_url']):
+                forms.save()
+                return HttpResponseRedirect(reverse('confd:project_list'))
+            else:
+                return render(request, 'confd/apply_project.html', {'forms': forms, 'errmsg': '项目创建失败'})
+        except:
+            return render(request, 'confd/apply_project.html', {'forms': forms, 'errmsg': '项目创建失败'})
+
+
+
 
 
 class  ProjectListView(LoginRequiredMixin, PaginationMixin, ListView):
     '''
-      项目列表
+      项目列表，删除项目
     '''
     model = project_Confd
     template_name = 'confd/project_list.html'
