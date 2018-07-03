@@ -33,6 +33,7 @@ class  CreateProjectView(LoginRequiredMixin, TemplateView):
 
         #如果没选择上级项目,直接创建空白项目
         if webdata['superior_project_name']  == '----\u8bf7\u9009\u62e9----':
+		    webdata['project_url']  =   '/' +  webdata['project_url']
             if  Projects_form(webdata, request):
                return HttpResponseRedirect(reverse('confd:project_list'))
 
