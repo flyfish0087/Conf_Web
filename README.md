@@ -49,7 +49,7 @@
 		# systemctl   start  etcd  &&  systemctl  enable  etcd  #启动服务设置开机动
 
 	2)安装nginx
-		#yum install  gcc gcc-c++ pcre  pcre-devel   patch   unzip   zlib  zlib-devel -y  #依赖包
+		#yum install  gcc gcc-c++ pcre  pcre-devel   patch   unzip   zlib  zlib-devel  openssl openssl-devel  git  -y  #依赖包
 		#cd  /usr/local/src
 		#wget  http://nginx.org/download/nginx-1.12.1.tar.gz
 		#git clone https://github.com/yaoweibin/nginx_upstream_check_module.git  
@@ -174,6 +174,16 @@
 	
 		# git  clone  https://github.com/1032231418/Conf_Web.git
 		# cd Conf_Web/ospweb/
+		#yum install python-pip -y         #安装pip
+		#mkdir   /root/.pip/               #创建pip源配置文件目录
+		# vi  /root/.pip/pip.conf          #修改为阿里云的pip源
+		
+			[global]
+			trusted-host=mirrors.aliyun.com
+			index-url=http://mirrors.aliyun.com/pypi/simple/
+			[list]
+			format=columns
+		#pip install   virtualenv          #安装沙盒工具
 		#virtualenv   env                  #建议创建一个沙盒环境跑该平台
 		# source  env/bin/activate         #使用沙盒环境
 		# pip install -r requirement.txt   #安装相关软件
