@@ -183,6 +183,7 @@
 			index-url=http://mirrors.aliyun.com/pypi/simple/
 			[list]
 			format=columns
+			
 		#pip install   virtualenv          #安装沙盒工具
 		#virtualenv   env                  #建议创建一个沙盒环境跑该平台
 		# source  env/bin/activate         #使用沙盒环境
