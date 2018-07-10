@@ -49,7 +49,7 @@
 		# systemctl   start  etcd  &&  systemctl  enable  etcd  #启动服务设置开机动
 
 	2)安装nginx
-		#yum install  gcc gcc-c++ pcre  pcre-devel   patch   unzip   zlib  zlib-devel  openssl openssl-devel  git  -y  #依赖包
+		#yum install  python-devel gcc gcc-c++ pcre  pcre-devel   patch   unzip   zlib  zlib-devel  openssl openssl-devel  git  -y  #依赖包
 		#cd  /usr/local/src
 		#wget  http://nginx.org/download/nginx-1.12.1.tar.gz
 		#git clone https://github.com/yaoweibin/nginx_upstream_check_module.git  
