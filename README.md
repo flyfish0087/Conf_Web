@@ -57,7 +57,7 @@
 		#cd nginx-1.12.1
 		#patch  -p1 </usr/local/src/nginx_upstream_check_module/check_1.12.1+.patch
 		#./configure   --prefix=/usr/local/nginx --add-module=/usr/local/src/nginx_upstream_check_module/
-		make && make install
+		# make -j4 && make install
 		#mkdir  /usr/local/nginx/conf/vhost/
 		Nginx主配置文件修改为这个样子,增加include目录配置
 		#vi  /usr/local/nginx/conf/nginx.conf
