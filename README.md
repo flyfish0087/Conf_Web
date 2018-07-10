@@ -190,13 +190,15 @@
 		# pip install -r requirement.txt   #安装相关软件
 		
 	2)创建数据库并将表刷入数据库
+		#  mysql  -p          #登录数据库为平台创建一个数据库
+		#CREATE DATABASE  opsweb   CHARACTER SET utf8 COLLATE utf8_general_ci;      #创建数据库opsweb
 		
 		# vi opsweb/settings.py   #这里数据库信息改为自己的数据库信息
 				DATABASES = {
 					  'default': {
 						'ENGINE': 'django.db.backends.mysql',
-						'NAME': 'confd',
-						'HOST': '192.168.8.114',
+						'NAME': 'opsweb',
+						'HOST': 'localhost',
 						'USER': 'root',
 						'PASSWORD': '123456',
 						'PORT': 3306,
