@@ -260,3 +260,72 @@
 
 ![image](https://github.com/1032231418/PYVM/blob/master/conf_web_images/node.png)	
 
+
+
+## 五．nginx +  uwsgi  + django 项目部署
+
+	1)uwsgi  部署
+   
+		#source  env/bin/activate      #使用沙盒
+		#pip install uwsgi             #安装 uwsgi
+
+
+		#vi   uwsgi.ini 
+
+			[uwsgi]
+			# 配置服务器的监听ip和端口，让uWSGI作为nginx的支持服务器的话，设置socke就行；如果要让uWSGI作为单独的web-server，用http
+			http = 127.0.0.1:8000
+			#socket = 127.0.0.1:3309
+			# 配置项目目录（此处设置为项目的根目录）
+			chdir =  /home/web/opsweb
+			# 配置入口模块 (django的入口函数的模块，即setting同级目录下的wsgi.py)
+			wsgi-file =  opsweb/wsgi.py
+			# 开启master, 将会多开一个管理进程, 管理其他服务进程
+			master = True
+			# 服务器开启的进程数量
+			processes = 8
+			# 以守护进程方式提供服, 输出信息将会打印到log中
+			daemonize = wsgi.log
+			# 服务器进程开启的线程数量
+			threads = 4
+			# 退出的时候清空环境变量
+			vacuum = true
+			# 进程pid
+			pidfile = uwsgi.pid
+			# 配uWSGI搜索静态文件目录（及django项目下我们存放static文件的目录，用uWSGI作为单独服务器时才需要设置，此时我们是用nginx处理静态文件）
+			# check-static =  /home/web/opsweb/static/
+
+
+
+		#/home/env/bin/uwsgi   --ini uwsgi.ini   #启动服务
+
+	2)nginx  反向代理配置
+	
+	#vi  /usr/local/nginx/conf/vhost/ops.conf
+	
+			upstream  ops_web {
+			
+				server  127.0.0.1:8000;
+		}
+		  
+		server {
+		   server_name    ops.ship56.net;
+		   location / {
+			   proxy_pass        http://ops_web;
+			   proxy_redirect off;
+			   proxy_set_header Host $host;
+			   proxy_set_header X-Real-IP $remote_addr;
+			   proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+			}
+
+			location /static {
+						alias  /home/web/opsweb/static/;
+				}
+		}
+
+	#/usr/local/nginx/sbin/nginx  -s  reload  #重新加载配置文件
+
+	
+	
+	
+	
