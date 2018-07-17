@@ -309,7 +309,7 @@
 		}
 		  
 		server {
-		   server_name    ops.ship56.net;
+		   server_name    ops.xxx.com;       #改为你平台的域名
 		   location / {
 			   proxy_pass        http://ops_web;
 			   proxy_redirect off;
