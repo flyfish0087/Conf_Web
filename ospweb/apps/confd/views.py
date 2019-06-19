@@ -179,7 +179,7 @@ class  VhostListView(LoginRequiredMixin, PaginationMixin, ListView):
         pk = data.get('id')
         status = data.get('status')
         vhosts_object = vhosts_Confd.objects.get(pk=pk)
-        if  vhosts_Confd.objects.filter(pk=pk, vhosts_value__startswith='192'):
+        if  vhosts_Confd.objects.filter(pk=pk, vhosts_key__icontains = 'upstream'):
             if status == '0':
                 vhosts_object.vhosts_value =  vhosts_object.vhosts_value + ' down'
                 vhosts_object.vhosts_status  = 1
